@@ -1,0 +1,173 @@
+\documentclass[12pt,a4paper,titlepage]{article}
+\usepackage {graphicx}
+ 
+\begin{document}
+
+\begin{titlepage}
+\selectlanguage{english}
+
+%----------------------------------------------------------------------------------------
+% TITLE PAGE INFORMATION
+%----------------------------------------------------------------------------------------
+  \begin{center} % Center everything on the page
+
+  %----------------------------------------------------------------------------------------
+  % HEADING SECTIONS
+  %----------------------------------------------------------------------------------------
+  \textsc{\large Facultatea Calculatoare, Informatica si Microelectronica}\\[0.5cm]
+  \textsc{\large Universitatea Tehnica a Moldovei}\\[1.2cm] % Name of your university/college
+  \vspace{25 mm}
+
+  \textsc{\Large Medii Interactive de Dezvoltare a Produselor Soft}\\[0.5cm] % Major heading such as course name
+  \textsc{\large Lucrarea de laborator\#1}\\[0.5cm] % Minor heading such as course title
+  %\textsc{\large Laboratory work}\\[0.5cm] % Minor heading such as course title
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+  %----------------------------------------------------------------------------------------
+  % TITLE SECTION
+  %----------------------------------------------------------------------------------------
+  \vspace{10 mm}
+  \HRule \\[0.4cm]
+  { \LARGE \bfseries Version Control Systems si modul de setare a unui server }\\[0.4cm] % Title of your document
+  \HRule \\[1.5cm]
+
+  %----------------------------------------------------------------------------------------
+  % AUTHOR SECTION
+  %----------------------------------------------------------------------------------------
+      \vspace{30mm}
+
+      \begin{minipage}{0.4\textwidth}
+      \begin{flushleft} \large
+      \emph{Autor:}\\
+      Toma {Ana}
+      \end{flushleft}
+      \end{minipage}
+      ~
+      \begin{minipage}{0.4\textwidth}
+      \begin{flushright} \large
+      \emph{lector asistent:} \\
+      Irina {Cojanu} \\ 
+      \emph{lector superior:} \\
+      Radu {Melnic} % Supervisor's Name
+      \end{flushright}
+      \end{minipage}\\[4cm]
+
+      \vspace{5 mm}
+      % If you don't want a supervisor, uncomment the two lines below and remove the section above
+      %\Large \emph{Author:}\\
+      %John \textsc{Smith}\\[3cm] % Your name
+
+      %----------------------------------------------------------------------------------------
+      % DATE SECTION
+      %----------------------------------------------------------------------------------------
+
+      %{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+      %----------------------------------------------------------------------------------------
+      % LOGO SECTION
+      %----------------------------------------------------------------------------------------
+
+      %\includegraphics{red}\\[0.5cm] % Include a department/university logo - this will require the graphicx package
+
+      %----------------------------------------------------------------------------------------
+
+      \vfill % Fill the rest of the page with whitespace
+      \end{center}
+      
+\end{titlepage}
+   
+ \section{Scopul lucrarii de laborator}
+De a se invata utilizarea unui Version Control System si modul de setare a unui server.
+\section{Obiective}
+Studierea Version Control Systems (git).
+\clearpage
+\section{Mersul lucrarii de laborator}
+
+\subsection{Cerintele}
+
+1.Initializarea unui nou repositoriu.\\
+2.Configurarea VCS.\\
+3.Commit, Push pe branch.\\
+4.Folosirea fisierului .gitignore.\\
+5.Revenire la versiunele anterioare.\\
+6.Crearea branch-urilor noi.\\
+7.Commit pe ambele branch-uri.\\
+8.Merge la 2 branchuri.\\
+9.Rezolvarea conflictelor.\\
+
+\subsection{Analiza Lucrarii de laborator}
+\tab Linkul la repozitoriu \textbf{https://github.com/TomaAna/MIDPS}\\
+Sunt mai multe modalitati de a initializa un repozitoriu pe github.
+Putem crea o mapa goala in care vom plasa gitul nostru prin intermediul comenzii \textbf{git init}.\\
+\tab Urmatorul pas este crearea insusi a noului repozitoriu pe care il vom crea utilizind urmatoarea comanda
+\textbf{curl -u 'USER' https.//api.github.com\\/user/repos -d '\{"name":"NUME"\}'}. Unde cuvintele scrise cu CAPS
+se vor inlocui cu numele utilizatorului si numele repozitoriului.\\
+\tab Dupa aceasta este necesar sa unim gitul nostru gol cu repozitoriul creat.
+Vom folosi urmatoarea comanda \textbf{git remote add origin "Linkul la repositoriu"}\\
+
+\tab O alta metoda de a crea un repozitoriu este cea online.
+Pentru aceasta este nevoie sa deschidem pagina noastra pe github , sa alegem \textbf{repositories} si sa apasam butonul \textbf{new.}\\
+\\
+
+\\
+\\
+\tab \textbf{Configurarea gitului} consta in mai multe etape. La inceput vom configura numele si emailul.
+Scrim urmatoarele comenzi:\\
+\textbf{git config --global user.name "NUMELE"}\\
+\textbf{git config --global user.email EMAIL}\\
+\includegraphics [width=\textwidth]{lion.png}
+
+\\
+
+\tab Urmatorul pas consta in generarea la cheia \textbf{SSH} (Secure Shell). Scriem in CLI \textbf{ssh-keygen},
+iar cheia obtinuta o copiem in setarile noastre de pe git.
+\tab Este de dorit sa initializam repozitoriul nostru cu un fisier \textbf{README.md} si un \textbf{.gitignore}. In fisierul
+README.md vom adauga niste informatie pentru cei care se vor folosi de repozitoriu iar in fisierul .gitignore vom adauga
+toate fisierele ce trebuiesc ignorate (adica sa nu fie incarcate).\\
+\includegraphics[width=\textwidth]{ssh.png}
+\clearpage
+
+\textbf Dupa ce am generat keygen-ul,clonam repozitoriul pe masina locala.
+\includegraphics[width=\textwidth]{masina.png}
+\textbf Pentru a adauga fisiere pe repozitoriu,vom folosi urmatoarele comenzi: git add * - comanda
+indexeaza toate fisierele. git commit -m - comanda face un snapshot la toate schimbarile
+noastre.
+git push origin master - comanda incarca toate fisierele indexate pe git.Totodata vom
+folosi git status si git show pentru a ne asigura ca fisierele au fost adaugate in repozitoriu.\textbf\\
+\includegraphics[width=\textwidth]{versiune1.png}
+\clearpage
+\textbf Revenirea la o versiune mai veche poate fi efectuata cu ajutorul comenzii git reset –TYPE
+”codul comitului”. Exista diferenta intre –soft si –hard , cind facem soft reset indexurile
+ramin neschimbate. Iar in cazul in care facem hard reset , pierdem indexurile.
+Am creat un fisier nou text.txt in versiunea 1.\tab Dupa care l-am sters si am facut commit la
+versiunea 2 in care am sters fisierul test.txt.Dorim sa revenim la versiunea1.\textbf La inceput
+vom lansa comanda git log care ne arata logul de commituri si codul pentru fiecare
+commit. Vom avea nevoie de primele 7 cifre la commitul anterior.\textbf\\
+
+\includegraphics[width=\textwidth]{gitlog.png}\\
+\textbf Acum folosim comenzile git reset --hard si git reset --soft.\\ \includegraphics[width=\textwidth]{gitreset.png}\\
+VCS ne permite sa avem mai multe branch-uri. Branch-urile sunt comod de folosit cind
+dorim sa lucram paralel la un proiect si apoi dorim sa unim toate modificarile.
+git branch ”name” - creeaza un branch nou cu numele ”name”. git branch - vizualizarea
+branch-urilor (* indica branch-ul curent). git branch -d ”nume” - sterge branch-ul
+”nume”. git checkout -b ”name” - creeaza un branch nou cu numele ”name” si face switch
+la el.\\
+\includegraphics[width=\textwidth]{branch.png}
+\includegraphics[width=\textwidth]{branchnou.png}
+\includegraphics[width=\textwidth]{brr.png}
+\clearpage
+Vom lucra cu 2 branch-uri - ”master” si ”nou”. Vom crea in fiecare branch cite un fisier
+to mer,dar continutul fiecaruia va fi diferit.\\
+\includegraphics[width=\textwidth]{conflict.png}
+\clearpage
+\section{Concluzie}
+ \textbf  In urma efectuarii lucrarii de laborator numarul 1 la MIDP am studiat\textbf { VCS}.Mi-am aprofundat cunostintele in folosirea platformei GitHub.
+Am analizat initializarea unui nou repositoriu si am invatat cum sa creez branch-uri noi.
+A fost o experienta noua pentru mine,deoarece anterior nu am folosit git-ul.
+Astfel am aflat ca git-ul este un sistem open-source de control a versiunilor conceput de Linus Trovalds – aceea?i persoana care a creat sistemul de operare Linux. Git este in fapt asemanator cu alte astfel de sisteme de control a versiunilor, precum Mercurial, Subversion sau CVS.
+Git este efectiv o unealta bazata pe linii de comanda, insa locul in care se centralizeaza toate datele si in care are loc stocarea proiectelor este efectiv Hub-ul, mai exact GitHub.com. Aici dezvoltatorii pot adauga si stoca proiecte la care lucreaza impreuna cu alti pasionati.
+\end{document}
+
+
+
