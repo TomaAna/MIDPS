@@ -1,0 +1,212 @@
+\documentclass[12pt,a4paper,titlepage]{article}
+\usepackage {graphicx}
+ 
+\begin{document}
+
+\begin{titlepage}
+\selectlanguage{english}
+
+%----------------------------------------------------------------------------------------
+% TITLE PAGE INFORMATION
+%----------------------------------------------------------------------------------------
+  \begin{center} % Center everything on the page
+
+  %----------------------------------------------------------------------------------------
+  % HEADING SECTIONS
+  %----------------------------------------------------------------------------------------
+  \textsc{\large Facultatea Calculatoare, Informatica si Microelectronica}\\[0.5cm]
+  \textsc{\large Universitatea Tehnica a Moldovei}\\[1.2cm] % Name of your university/college
+  \vspace{25 mm}
+
+  \textsc{\Large Medii Interactive de Dezvoltare a Produselor Soft}\\[0.5cm] % Major heading such as course name
+  \textsc{\large Lucrarea de laborator\#2}\\[0.5cm] % Minor heading such as course title
+  %\textsc{\large Laboratory work}\\[0.5cm] % Minor heading such as course title
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+  %----------------------------------------------------------------------------------------
+  % TITLE SECTION
+  %----------------------------------------------------------------------------------------
+  \vspace{10 mm}
+  \HRule \\[0.4cm]
+  { \LARGE \bfseries GUI Development }\\[0.4cm] % Title of your document
+  \HRule \\[1.5cm]
+
+  %----------------------------------------------------------------------------------------
+  % AUTHOR SECTION
+  %----------------------------------------------------------------------------------------
+      \vspace{30mm}
+
+      \begin{minipage}{0.4\textwidth}
+      \begin{flushleft} \large
+      \emph{Autor:}\\
+      Toma {Ana}
+      \end{flushleft}
+      \end{minipage}
+      ~
+      \begin{minipage}{0.4\textwidth}
+      \begin{flushright} \large
+      \emph{lector asistent:} \\
+      Irina {Cojanu} \\ 
+      \emph{lector superior:} \\
+      Radu {Melnic} % Supervisor's Name
+      \end{flushright}
+      \end{minipage}\\[4cm]
+
+      \vspace{5 mm}
+      % If you don't want a supervisor, uncomment the two lines below and remove the section above
+      %\Large \emph{Author:}\\
+      %John \textsc{Smith}\\[3cm] % Your name
+
+      %----------------------------------------------------------------------------------------
+      % DATE SECTION
+      %----------------------------------------------------------------------------------------
+
+      %{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+      %----------------------------------------------------------------------------------------
+      % LOGO SECTION
+      %----------------------------------------------------------------------------------------
+
+      %\includegraphics{red}\\[0.5cm] % Include a department/university logo - this will require the graphicx package
+
+      %----------------------------------------------------------------------------------------
+
+      \vfill % Fill the rest of the page with whitespace
+      \end{center}
+      
+\end{titlepage}
+   
+ \section{Scopul lucrarii de laborator}
+Realizarea unui simplu GUI Calculator
+
+\section{Obiective}
+1.Realizeaza un simplu GUI Calculator\\
+2.Operatiile simple: +,-,*,/,putere,radical,InversareSemn(+/-),operatii cu numere zecimale.\\
+3.Divizare proiectului in doua module - Interfata grafica(Modul GUI) si Modulul de baza(Core Module).
+\clearpage
+\section{Mersul lucrarii de laborator}
+
+\subsection{Cerintele}
+
+1.Realizeaza un simplu GUI calculator care suporta urmatoare functii: +, -, /, *, putere, radical, InversareSemn(+/-), operatii cu numere zecimale.\\
+2.Divizare proiectului in doua module - Interfata grafica(Modul GUI) si Modulul de baza(Core Module).\\
+
+\subsection{Analiza Lucrarii de laborator}
+\tab Linkul la repozitoriu \textbf{https://github.com/TomaAna/MIDPS}\\
+Sunt mai multe modalitati de  realizare a unui gui calculator.
+Pentru creaarea calculatorului am folosit programarea in windows cu ajutorul limbajului de programare  \textbf{C++}.\\
+\tab Primul pas este crearea functiei \textbf {WINMAIN} care este eschivalentul WINDOWS a functiei main utilizata in toate programele scrise
+in C si C++,folosita pentru prelucrari primare.Functia WinMain difera insa in multe privinte de main si nu in ultimul rind,prin modul de
+de declarare.
+\textbf{int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hPrev,LPSTR CmdLine,int CmdShow)}. 
+
+ \tab Functia WinMain returneaza  o valoare int la fel ca multe alte programe in C++.
+ Parametrii acceptati de WinMain: \\ \textbf{WNDCLASS Wc;}\\
+\textbf{ MSG      Msg;}\\
+
+\tab Functia WinMain din program termina cu o bucla \textbf{while} care preia mesaje pina cind utilizatorul trimite sistemului mesajul 
+     \textbf{WMQUIT}                 
+\\
+
+\\
+\\
+\tab \textbf{Bucla While}\\ 
+while(GetMessage(&Msg,NULL,0,0))\\
+   {\\
+    HWND hActiveWindow = GetActiveWindow();\\
+    if(!IsWindow(hActiveWindow) || !IsDialogMessage(hActiveWindow,&Msg))\\
+      {\\
+        TranslateMessage(&Msg);\\
+        DispatchMessage(&Msg);\\
+      }\\
+    }\\
+ return Msg.wParam;\\
+}\\
+\\
+
+\tab Programul folosete clasa \textbf{BUTTON} pentru a crea butoane in cadrul ferestrelor.\\ 
+     
+Butoanele sunt butoane,de apasare sunt in forma de dreptunghi.\\
+     
+HWND BCX_Butoane \\
+(char* Text,HWND hWnd,int id,int X,int Y,int W,int H,int Style,int Exstyle)\\
+{
+  HWND  A;\\
+  
+  if(!Style)\\
+  {
+    Style=WS_CHILD | WS_VISIBLE | BS_MULTILINE | BS_PUSHBUTTON | WS_TABSTOP;\\
+  }
+  if(Exstyle==-1)\\
+  {
+    Exstyle=WS_EX_STATICEDGE;\\
+  }
+  A = CreateWindowEx(Exstyle,"button",Text,Style,\\
+    X*BCX_ScaleX, Y*BCX_ScaleY, W*BCX_ScaleX, H*BCX_ScaleY,\\
+    hWnd,(HMENU)id,BCX_hInstance,NULL);\\
+  SendMessage(A,(UINT)WM_SETFONT,(WPARAM)GetStockObject(DEFAULT_GUI_FONT),\\
+    (LPARAM)MAKELPARAM(FALSE,0));\\
+  if (W==0)\\
+  {\\
+    HDC  hdc=GetDC(A);\\
+    SIZE  size;\\
+    GetTextExtentPoint32(hdc,Text,strlen(Text),&size);\\
+    ReleaseDC(A,hdc);\\
+    MoveWindow(A,X*BCX_ScaleX,Y*BCX_ScaleY,(int)(size.cx+(size.cx*1)),(int)(size.cy+(size.cy*0.32)),TRUE);\\
+  }\\
+  return A;\\
+}\\
+
+HWND BCX_Editeaza\\
+(char* Text,HWND hWnd,int id,int X,int Y,int W,int H,int Style,int Exstyle)\\
+{
+  HWND  A;\\
+  // assign default style\\
+  if (!Style)\\
+  {
+      Style = WS_CHILD | WS_VISIBLE | ES_WANTRETURN |\\
+              WS_VSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL;\\
+  }\\
+  if (Exstyle==-1)\\
+  {
+      Exstyle = WS_EX_CLIENTEDGE;\\
+  }\\
+  A = CreateWindowEx(Exstyle,"edit",Text, Style,\\
+      X*BCX_ScaleX, Y*BCX_ScaleY, W*BCX_ScaleX, H*BCX_ScaleY,\\
+      hWnd,(HMENU)id,BCX_hInstance,NULL);\\
+
+  SendMessage(A,(UINT)WM_SETFONT,(WPARAM)GetStockObject(DEFAULT_GUI_FONT),\\
+    (LPARAM)MAKELPARAM(FALSE,0));\\
+  return A;\\
+}
+char *BCX_Get_Text(HWND hWnd)\\
+{\\
+  int tmpint;\\
+  tmpint = 2 + GetWindowTextLength(hWnd);\\
+  char *strtmp = BCX_TmpStr(tmpint);\\
+  GetWindowText(hWnd,strtmp,tmpint);\\
+  return strtmp;\\
+}\\
+int BCX_Set_Text(HWND hWnd, char *Text)\\
+{\\
+  return SetWindowText(hWnd,Text);\\
+}\\
+
+
+
+ 
+\section{Concluzie}
+ \tab  In urma efectuarii lucrarii de laborator numarul 2 la MIDPS am studiat  si am invatat cum sa realizez un simplu GUI calculator care
+ suporta urmatoare functii: +, -, /, *, putere, radical, InversareSemn(+/-), operatii cu numere zecimale.
+ Am folosit un limbaj cu care am facut cunostinta recent,astfel am invatat si am analizat mai multe lucruri noi.
+ Am utilizat  un IDE pentru limbajele de programare C++, C ce a fost lansat in versiune stabila in 2008 care poarta denumirea de
+\textbf{Code::Blocks} care permite  proiectarea interfetelor grafice intr-un mod vizual, de tipul WYSIWYG (What You See Is What You Get).
+Designerul se numeste wxSmith si este derivat din libraria wxWidgets, librarie ce permite crearea de interfete grafice cross-platform.
+      
+           
+     
+\end{document}
+
+
+
